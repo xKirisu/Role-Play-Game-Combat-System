@@ -23,14 +23,14 @@ namespace rpgcs
         internal sbyte luck;
         private object strength;
 
-        internal Statistic(sbyte strength, sbyte intelligence, sbyte vitality, sbyte maxVitality, sbyte mana, sbyte maxMana, sbyte deffence, sbyte resistance, sbyte speed, sbyte luck)
+        internal Statistic(sbyte strength, sbyte intelligence, sbyte vitality, sbyte mana, sbyte deffence, sbyte resistance, sbyte speed, sbyte luck)
         {
             this.strength = strength;
             this.intelligence = intelligence;
             this.vitality = vitality;
-            this.max_vitality = maxVitality;
+            this.max_vitality = vitality;
             this.mana = mana;
-            this.max_mana = maxMana;
+            this.max_mana = mana;
             this.deffence = deffence;
             this.resistance = resistance;
             this.speed = speed;
@@ -43,8 +43,9 @@ namespace rpgcs
     /// </summary>
     internal partial class Unit
     {
+        public string name;
         // Ooutsiders
-        protected Statistic Atrubutes;
+        internal Statistic Atributes;
         protected Magic Spellbook;
         protected Status Status = Status.None;
         
@@ -52,30 +53,46 @@ namespace rpgcs
         /// <summary>
         /// Core of setting unit
         /// </summary>
-        Unit(Statistic atributes, Magic spellbook)
+        protected Unit(string name, Statistic atributes, Magic spellbook)
         {
-            Atrubutes = atributes;
+            this.name = name;
+            Atributes = atributes;
             Spellbook = spellbook;
 
 
         }
-        protected virtual void TakeAnAction() { }
+        public virtual void TakeAnAction(List<Unit> queue)
+        {
+            Console.WriteLine($"{name} have an action");
+        }
 
         /// <summary>
         /// Hurt and die
         /// </summary>
-        protected void Hurt(sbyte damage)
+        internal void Hurt(sbyte damage)
         {
-            Atrubutes.vitality -= damage;
+            Atributes.vitality -= damage;
+            Console.WriteLine($"{name} was hurt for {damage}");
 
-            if(Atrubutes.vitality <= 0 ) 
+            if (Atributes.vitality <= 0 ) 
             {
 
+            }
+        }
+        internal void Heal(sbyte value)
+        {
+            Atributes.vitality += value;
+            Console.WriteLine($"{name} was heal for {value}");
+
+            if (Atributes.vitality > Atributes.max_vitality)
+            {
+                Atributes.vitality = Atributes.max_vitality;
             }
         }
         protected void Die()
         {
             ChangeStatus(Status.Fainted);
+            Console.WriteLine($"{name} was fainted");
         }
 
         /// <summary>
