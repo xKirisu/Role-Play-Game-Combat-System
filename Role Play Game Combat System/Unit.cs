@@ -46,6 +46,7 @@ namespace rpgcs
     {
         public string name;
         // Ooutsiders
+        internal Statistic BaseAtributes;
         internal Statistic Atributes;
         protected Magic Spellbook;
         internal Status Status = Status.None;
@@ -57,10 +58,10 @@ namespace rpgcs
         protected Unit(string name, Statistic atributes, Magic spellbook)
         {
             this.name = name;
+
+            BaseAtributes = atributes;
             Atributes = atributes;
             Spellbook = spellbook;
-
-
         }
         public virtual void TakeAnAction(List<Unit> queue, Dice dice)
         {
@@ -95,6 +96,12 @@ namespace rpgcs
         {
             ChangeStatus(Status.Fainted);
             Console.WriteLine($"{name} was fainted");
+        }
+
+        protected void PressToContinue()
+        {
+            Console.WriteLine("Press enter to continue...");
+            string end_turn = Console.ReadLine();
         }
 
         /// <summary>

@@ -58,6 +58,11 @@ namespace rpgcs
         }
         internal partial void ChangeStatus(Status new_status)
         {
+            Atributes.luck = BaseAtributes.luck;
+            Atributes.strenght = BaseAtributes.strenght;
+            Atributes.intelligence = BaseAtributes.intelligence;
+            Atributes.speed = BaseAtributes.speed;
+
             this.Status = new_status;
         }
     }

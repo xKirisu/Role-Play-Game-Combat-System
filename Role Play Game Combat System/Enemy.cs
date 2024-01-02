@@ -24,16 +24,52 @@ namespace rpgcs
             };
         }
 
-        sbyte AI()
+        void AI(List<Unit> queue, Dice dice)
         {
-            sbyte id = 0;
-            return id;
+            byte id = (byte)(dice.random(4) - 1);
+
+            if (Spellbook.spellslot[id].is_offensive)
+            {
+                List<Unit> targets_list = new List<Unit>();
+
+                foreach (Unit target in queue)
+                {
+                    if (target is Character)
+                    {
+                        if (target.Status == Status.Distracting)
+                        {
+                            Magic.Cast(this, target, Spellbook.spellslot[id], dice.d6(), dice.d20());
+                            break;
+                        }
+                        else
+                        {
+                            targets_list.Add(target);
+                        }
+                    }
+                }
+
+                Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], Spellbook.spellslot[id], dice.d6(), dice.d20());
+            }
+            else
+            {
+                List<Unit> targets_list = new List<Unit>();
+
+                foreach (Unit target in queue)
+                {
+                    if (target is Enemy)
+                    {
+                        targets_list.Add(target);
+                    }
+                }
+
+                Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], Spellbook.spellslot[id], dice.d6(), dice.d20());
+            }
         }
         public override void TakeAnAction(List<Unit> queue, Dice dice)
         {
             base.TakeAnAction(queue, dice);
-
-
+            AI(queue, dice);
+            PressToContinue();
         }
 
         public static void EnemiesNameCorrector(Enemy[] bestiary, Enemy[] enemies)
@@ -63,6 +99,25 @@ namespace rpgcs
                 }
             }
 
+            foreach (Enemy e in bestiary)
+            {
+
+                if (enemy_counter[e.name] == 1)
+                {
+                    string correct = e.name;
+                    string one = e.name;
+                    one += "01";
+                    foreach (Enemy enemy in enemies)
+                    {
+                        if (enemy.name == one)
+                        {
+                            enemy.name = correct;
+                        }
+                    }
+                }
+
+
+            }
         }
     }
 }

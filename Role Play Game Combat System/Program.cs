@@ -21,6 +21,7 @@ namespace program
                 new Enemy(bestiary[dice.random(bestiary.Length)]),
                 new Enemy(bestiary[dice.random(bestiary.Length)])
             };
+            Enemy.EnemiesNameCorrector(bestiary, enemies);
 
             // Setting Queue
             List<Unit> Queue = new List<Unit>();
@@ -46,9 +47,9 @@ namespace program
                     unit.TakeAnAction(Queue, dice);
 
                     Console.Clear();
-                    Panel.Turn++;
+                    
                 }
-
+                Panel.Turn++;
                 // Check win
 
             }

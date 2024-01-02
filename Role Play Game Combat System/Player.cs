@@ -24,7 +24,7 @@ namespace rpgcs
         {
             base.TakeAnAction(queue, dice);
 
-
+            PressToContinue();
         }
 
         byte SpellFinder()

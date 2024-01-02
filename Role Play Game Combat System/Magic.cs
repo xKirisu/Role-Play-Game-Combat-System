@@ -25,7 +25,7 @@ namespace rpgcs
         internal bool is_critable;
         internal bool is_offensive;
 
-        Spell(string name, float factor, sbyte cost, DamageType damage_type, bool is_critable, bool is_offensive)
+        internal Spell(string name, float factor, sbyte cost, DamageType damage_type, bool is_critable, bool is_offensive)
         {
             this.name = name;
             this.factor = factor;
@@ -38,7 +38,7 @@ namespace rpgcs
 
             this.is_critable = is_critable;
         }
-        Spell(string name, float factor, sbyte cost, DamageType damage_type, Status status, bool is_critable, bool is_offensive)
+        internal Spell(string name, float factor, sbyte cost, DamageType damage_type, Status status, bool is_critable, bool is_offensive)
         {
             this.name = name;
             this.factor = factor;
@@ -55,16 +55,16 @@ namespace rpgcs
     }
     internal class Magic
     {
-        
-        Spell[] spellslot = new Spell[4];
+
+        internal Spell[] spellslot = new Spell[4];
 
         internal Dictionary<string, Spell> Factory()
         {
             return new Dictionary<string, Spell>
             {
-                { "Atack",              new Spell() },
-                { "Fire Ball",          new Spell() },
-                { "Lightning",          new Spell() },
+                { "Atack",              new Spell("Atack", 1f, 0, DamageType.Phisical, true, true) },
+                { "Fire Ball",          new Spell("Fire ball", 1.4f,2, DamageType.Magical, false, true) },
+                { "Lightning",          new Spell("Lightning", 1.6f, 4, DamageType.Magical, Status.Taunt, true, true) },
                 { "Sorrow",             new Spell() },
                 { "Heal",               new Spell() },
                 { "Blessing",           new Spell() },
@@ -100,7 +100,7 @@ namespace rpgcs
         }
 
 
-        internal void Cast(Unit unit, Unit target, Spell spell, sbyte dice6, sbyte dice20)
+        internal static void Cast(Unit unit, Unit target, Spell spell, byte dice6, byte dice20)
         {
 
             sbyte value = 0;
