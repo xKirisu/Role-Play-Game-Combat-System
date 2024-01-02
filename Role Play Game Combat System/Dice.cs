@@ -14,13 +14,18 @@ namespace rpgcs
             rand = new Random();
         }
 
-        sbyte d20()
+        public byte d20()
         {
-            return (sbyte)(rand.Next(1, 20));
+            return (byte)(rand.Next(1, 20));
         }
-        sbyte d6()
+        public byte d6()
         {
-            return (sbyte)(rand.Next(1, 20));
+            return (byte)(rand.Next(1, 20));
+        }
+
+        public byte random(int size)
+        {
+            return (byte)(rand.Next(1, size));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿
+﻿using System.Reflection.Metadata.Ecma335;
+
 namespace rpgcs
 {
     /// <summary>
@@ -47,7 +48,7 @@ namespace rpgcs
         // Ooutsiders
         internal Statistic Atributes;
         protected Magic Spellbook;
-        protected Status Status = Status.None;
+        internal Status Status = Status.None;
         
 
         /// <summary>
@@ -61,9 +62,10 @@ namespace rpgcs
 
 
         }
-        public virtual void TakeAnAction(List<Unit> queue)
+        public virtual void TakeAnAction(List<Unit> queue, Dice dice)
         {
             Console.WriteLine($"{name} have an action");
+            ExecuteStatus(dice);
         }
 
         /// <summary>
@@ -76,7 +78,7 @@ namespace rpgcs
 
             if (Atributes.vitality <= 0 ) 
             {
-
+                Die();
             }
         }
         internal void Heal(sbyte value)
@@ -98,7 +100,7 @@ namespace rpgcs
         /// <summary>
         /// Status usage function
         /// </summary>
-        internal partial void ExecuteStatus();
+        internal partial void ExecuteStatus(Dice dice);
         internal partial void ChangeStatus(Status new_status);
     }
 

@@ -62,7 +62,31 @@ namespace rpgcs
         {
             return new Dictionary<string, Spell>
             {
-                { "Atack", new Spell() }
+                { "Atack",              new Spell() },
+                { "Fire Ball",          new Spell() },
+                { "Lightning",          new Spell() },
+                { "Sorrow",             new Spell() },
+                { "Heal",               new Spell() },
+                { "Blessing",           new Spell() },
+                { "Divine Chastiment",  new Spell() },
+                { "Condamnation",       new Spell() },
+                { "Protection",         new Spell() },
+                { "Distraction",        new Spell() },
+                { "Perish",             new Spell() },
+                { "Ice Shard",          new Spell() },
+                { "Hail",               new Spell() },
+                { "Black Tome",         new Spell() },
+                { "Unshod Shadow",      new Spell() },
+                { "Deathly Reap",       new Spell() },
+                { "Virgin Fate",        new Spell() },
+                { "Swat",               new Spell() },
+                { "Atack Order",        new Spell() },
+                { "Regenerate Mucus",   new Spell() },
+                { "Toxic Ooze",         new Spell() },
+                { "Toxic Dagger",       new Spell() },
+                { "Trick",              new Spell() },
+                { "NULL",               new Spell() },
+
             };
         }
 
