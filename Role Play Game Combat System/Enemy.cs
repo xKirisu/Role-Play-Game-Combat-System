@@ -26,9 +26,33 @@ namespace rpgcs
 
         void AI(List<Unit> queue, Dice dice)
         {
+            byte i = 0;
             byte id = (byte)(dice.random(4) - 1);
+            string name = "Atack";
 
-            if (Spellbook.spellslot[id].is_offensive)
+            // Getspell
+            foreach (KeyValuePair<string, Spell> spell in Spellbook.spellslot)
+            {
+                if(id == i)
+                {
+                    name = spell.Value.name;
+                    break;
+                }
+                i++;
+            }
+
+            // Mana checker
+            if(Spellbook.spellslot[name].cost > this.Atributes.mana)
+            {
+                id = 0;
+            }
+            else
+            {
+                this.Atributes.mana -= Spellbook.spellslot[name].cost;
+            }
+
+            // Target select
+            if (Spellbook.spellslot[name].is_offensive)
             {
                 List<Unit> targets_list = new List<Unit>();
 
@@ -38,7 +62,7 @@ namespace rpgcs
                     {
                         if (target.Status == Status.Distracting)
                         {
-                            Magic.Cast(this, target, Spellbook.spellslot[id], dice.d6(), dice.d20());
+                            Magic.Cast(this, target, Spellbook.spellslot[name], dice.d6(), dice.d20());
                             break;
                         }
                         else
@@ -48,7 +72,7 @@ namespace rpgcs
                     }
                 }
 
-                Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], Spellbook.spellslot[id], dice.d6(), dice.d20());
+                Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], Spellbook.spellslot[name], dice.d6(), dice.d20());
             }
             else
             {
@@ -62,7 +86,7 @@ namespace rpgcs
                     }
                 }
 
-                Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], Spellbook.spellslot[id], dice.d6(), dice.d20());
+                Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], Spellbook.spellslot[name], dice.d6(), dice.d20());
             }
         }
         public override void TakeAnAction(List<Unit> queue, Dice dice)

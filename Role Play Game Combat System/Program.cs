@@ -42,7 +42,7 @@ namespace program
                 // Turn
                 foreach (Unit unit in Queue)
                 {
-                    Panel.Draw(party, enemies, Queue);
+                    Panel.Draw(party, enemies, Queue, unit);
 
                     unit.TakeAnAction(Queue, dice);
 

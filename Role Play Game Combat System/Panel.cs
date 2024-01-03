@@ -9,7 +9,7 @@ namespace rpgcs
     internal class Panel
     {
         public static byte Turn = 1;
-        public static void Draw(Character[] party, Enemy[] enemies, List<Unit> queue)
+        public static void Draw(Character[] party, Enemy[] enemies, List<Unit> queue, Unit actual)
         {
             Console.WriteLine($"Turn: {Turn}");
 
@@ -63,7 +63,16 @@ namespace rpgcs
             Console.WriteLine("Queue:");
             foreach (Unit unit in queue)
             {
-                Console.Write($"{unit.name} ");
+                if(unit.name == actual.name)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write($"{unit.name} ");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.Write($"{unit.name} ");
+                }
             }
             Console.Write('\n');
         }

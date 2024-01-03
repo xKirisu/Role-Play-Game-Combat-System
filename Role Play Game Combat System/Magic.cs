@@ -56,36 +56,40 @@ namespace rpgcs
     internal class Magic
     {
 
-        internal Spell[] spellslot = new Spell[4];
+        internal Dictionary<string, Spell> spellslot = new Dictionary<string, Spell>();
 
         internal Dictionary<string, Spell> Factory()
         {
             return new Dictionary<string, Spell>
             {
-                { "Atack",              new Spell("Atack", 1f, 0, DamageType.Phisical, true, true) },
-                { "Fire Ball",          new Spell("Fire ball", 1.4f,2, DamageType.Magical, false, true) },
-                { "Lightning",          new Spell("Lightning", 1.6f, 4, DamageType.Magical, Status.Taunt, true, true) },
-                { "Sorrow",             new Spell() },
-                { "Heal",               new Spell() },
-                { "Blessing",           new Spell() },
-                { "Divine Chastiment",  new Spell() },
-                { "Condamnation",       new Spell() },
-                { "Protection",         new Spell() },
-                { "Distraction",        new Spell() },
-                { "Perish",             new Spell() },
-                { "Ice Shard",          new Spell() },
-                { "Hail",               new Spell() },
-                { "Black Tome",         new Spell() },
-                { "Unshod Shadow",      new Spell() },
-                { "Deathly Reap",       new Spell() },
-                { "Virgin Fate",        new Spell() },
-                { "Swat",               new Spell() },
-                { "Atack Order",        new Spell() },
-                { "Regenerate Mucus",   new Spell() },
-                { "Toxic Ooze",         new Spell() },
-                { "Toxic Dagger",       new Spell() },
-                { "Trick",              new Spell() },
-                { "NULL",               new Spell() },
+                                                // name                 factor  cost     damagetype      change status critable offensive
+                { "Atack",              new Spell("Atack",              1f,     0, DamageType.Phisical,                true, true) },
+                { "Fire Ball",          new Spell("Fire ball",          1.4f,   2, DamageType.Magical,                 false, true) },
+                { "Lightning",          new Spell("Lightning",          1.8f,   6, DamageType.Magical, Status.Taunt,   true, true) },
+                { "Sorrow",             new Spell("Sorrow",             0.5f,   2, DamageType.Magical, Status.Calamity,false, true) },
+                { "Heal",               new Spell("Heal",               1f,     4, DamageType.Magical,                 true, false) },
+                { "Blessing",           new Spell("Blessing",           0.5f,   6, DamageType.Magical, Status.Blessing,false, false) },
+                { "Divine Chastiment",  new Spell("Divine Chastiment",  1.8f,   8, DamageType.Magical, Status.Taunt,   true, true ) },
+                { "Condamnation",       new Spell("Condamnation",       1.4f,   6, DamageType.Phisical,                true, true) },
+                { "Protection",         new Spell("Protection",         0f,     4, DamageType.Phisical,Status.Protected,false, false) },
+                { "Distraction",        new Spell("Distraction",        0.5f,   8, DamageType.Phisical,Status.Distracting,true, true) },
+                { "Punishment",         new Spell("Punishment",         1.8f,   6, DamageType.Other,                     true, true) },
+                { "Decapitation",       new Spell("Decapitation",       2f,     8, DamageType.Other,                     true, true) },
+                { "Perish",             new Spell("Perish",             2f,     8, DamageType.Magical,               true, true) },
+                { "Ice Shard",          new Spell("Ice Shard",          1.8f,   8, DamageType.Magical,               true, true) },
+                { "Hail",               new Spell("Hail",               0.5f,   4, DamageType.Magical, Status.Delay, false, true) },
+                { "Black Tome",         new Spell("Black Tome",         0.0f,   4, DamageType.Magical, Status.Wisdom, false, false) },
+                { "Unshod Shadow",      new Spell("Unshod Shadow",      0f,     4, DamageType.Phisical, Status.Swift, false, false) },
+                { "Deathly Reap",       new Spell("Deathly Reap",       2f,     8, DamageType.Magical,               true, true) },
+                { "Virgin Fate",        new Spell("Virgin Fate",        0.5f,   4, DamageType.Magical, Status.Prowess, false, false) },
+                { "Swat",               new Spell("Swat",               1.4f,   4, DamageType.Phisical, Status.Taunt, true, true) },
+                { "Atack Order",        new Spell("Atack Order",        0.0f,   4, DamageType.Phisical, Status.Prowess, false, false) },
+                { "Regenerate Mucus",   new Spell("Regenerate Mucus",   1.4f,   4, DamageType.Magical,                  true, false) },
+                { "Toxic Ooze",         new Spell("Toxic Ooze",         1.4f,   4, DamageType.Magical, Status.Poisoned, true, true) },
+                { "Toxic Dagger",       new Spell("Toxic Dagger",       1.8f,   6, DamageType.Phisical, Status.Poisoned, true, true) },
+                { "Trick",              new Spell("Trick",              1.8f,   8, DamageType.Other,    Status.Taunt, false, true) },
+
+                { "NULL",               new Spell("NULL", 0f, 0, DamageType.Other, Status.None, false, false) },
 
             };
         }
@@ -93,10 +97,11 @@ namespace rpgcs
 
         internal Magic(string name_1, string name_2, string name_3) 
         {
-            spellslot[0] = Factory()["Atack"];
-            spellslot[1] = Factory()[name_1];
-            spellslot[2] = Factory()[name_2];
-            spellslot[3] = Factory()[name_3];
+            spellslot.Add("Atack", Factory()["Atack"]);
+            if(name_1 != "Atack") spellslot.Add(name_1, Factory()[name_1]);
+            if (name_2 != "Atack") spellslot.Add(name_2, Factory()[name_2]);
+            if (name_3 != "Atack") spellslot.Add(name_3, Factory()[name_3]);
+
         }
 
 
