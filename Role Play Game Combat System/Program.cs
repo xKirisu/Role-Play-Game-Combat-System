@@ -7,7 +7,6 @@ namespace program
     {
         static void Main()
         {
-            Console.WriteLine("HelloWorld!");
 
             // Setting obect
             Dice dice = new Dice();
@@ -36,7 +35,7 @@ namespace program
             while (true)
             {
                 // Setting queue
-                Queue = Queue.OrderBy(unit => unit.Atributes.speed + dice.d6()).ToList();
+                Queue = Queue.OrderBy(unit => unit.Atributes.speed + dice.d6()/2).ToList();
                 Queue.Reverse();
 
                 // Turn
@@ -44,13 +43,28 @@ namespace program
                 {
                     Panel.Draw(party, enemies, Queue, unit);
 
-                    unit.TakeAnAction(Queue, dice);
+                    if (unit.Status != Status.Fainted)
+                        unit.TakeAnAction(Queue, dice);
 
                     Console.Clear();
                     
                 }
+
                 Panel.Turn++;
-                // Check win
+
+                //Check win
+                foreach(Character character in party)
+                {
+                    if (character.Status != Status.Fainted) break;
+                    if (party.LastOrDefault().Status == Status.Fainted)
+                    {
+
+                    }
+                }
+                foreach(Enemy enemy in enemies)
+                {
+                    if (enemy.Status != Status.Fainted) break;
+                }
 
             }
         }

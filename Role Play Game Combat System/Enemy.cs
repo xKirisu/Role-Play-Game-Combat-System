@@ -15,12 +15,12 @@ namespace rpgcs
         {
             return new Enemy[]
             {
-                new Enemy("Slime",      new Statistic(2,2,30, 8,3,4,1,2), new Magic("Atack", "Regenerate Mucus", "Toxic Ooze")),
+                new Enemy("Slime",      new Statistic(2,2,30, 8,3,4,1,2), new Magic("Atack", "Regenerate_Mucus", "Toxic_Ooze")),
                 new Enemy("Potato",     new Statistic(2,2,30, 8,3,4,1,2), new Magic("Atack", "Perish", "Atack")),
-                new Enemy("Goblin",     new Statistic(2,2,30, 8,3,4,1,2), new Magic("Atack", "Swat", "Atack Order")),
-                new Enemy("Ice mage",   new Statistic(2,2,30, 8,3,4,1,2), new Magic("Ice Shard", "Hail", "Black Tome")),
-                new Enemy("Reaper",     new Statistic(2,2,30, 8,3,4,1,2), new Magic("Unshod Shadow", "Deathly Reap", "Virgin Fate")),
-                new Enemy("Trickster",  new Statistic(2,2,30, 8,3,4,1,2), new Magic("Atack", "Trick", "Toxic Dagger"))
+                new Enemy("Goblin",     new Statistic(2,2,30, 8,3,4,1,2), new Magic("Atack", "Swat", "Order_Atack")),
+                new Enemy("Ice_Mage",   new Statistic(2,2,30, 8,3,4,1,2), new Magic("Ice_Shard", "Hail", "Black_Tome")),
+                new Enemy("Reaper",     new Statistic(2,2,30, 8,3,4,1,2), new Magic("Unshod_Shadow", "Deathly_Reap", "Virgin_Fate")),
+                new Enemy("Trickster",  new Statistic(2,2,30, 8,3,4,1,2), new Magic("Atack", "Trick", "Toxic_Dagger"))
             };
         }
 
@@ -67,12 +67,14 @@ namespace rpgcs
                         }
                         else
                         {
-                            targets_list.Add(target);
+                            if(target.Status != Status.Fainted)
+                                targets_list.Add(target);
                         }
                     }
                 }
 
-                Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], Spellbook.spellslot[name], dice.d6(), dice.d20());
+                if(targets_list.Any()) 
+                    Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], Spellbook.spellslot[name], dice.d6(), dice.d20());
             }
             else
             {

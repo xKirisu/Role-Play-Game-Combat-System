@@ -63,6 +63,9 @@ namespace rpgcs
             Atributes.intelligence = BaseAtributes.intelligence;
             Atributes.speed = BaseAtributes.speed;
 
+            Atributes.max_mana = BaseAtributes.max_mana;
+            Atributes.max_vitality = BaseAtributes.max_vitality;
+
             this.Status = new_status;
         }
     }
