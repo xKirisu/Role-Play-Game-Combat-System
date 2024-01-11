@@ -20,7 +20,7 @@ namespace rpgcs
         }
         public byte d6()
         {
-            return (byte)(rand.Next(1, 20));
+            return (byte)(rand.Next(1, 6));
         }
 
         public byte random(int size)

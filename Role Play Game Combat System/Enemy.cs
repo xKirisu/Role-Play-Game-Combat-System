@@ -8,51 +8,38 @@ namespace rpgcs
 {
     internal class Enemy : Unit
     {
-        public Enemy(string name, Statistic atributes, Magic spellbook) : base(name, atributes, spellbook) { }
-        public Enemy(Enemy enemy) : base(enemy.name, enemy.Atributes, enemy.Spellbook) { }
+        public Enemy(string name, Statistic atributes, string spell1, string spell2, string spell3) : base(name, atributes, spell1, spell2, spell3) { }
+        public Enemy(Enemy enemy) : base(enemy.name, enemy.Atributes, enemy.SpellBook[1], enemy.SpellBook[2], enemy.SpellBook[3]) { }
 
         public static Enemy[] Fabric()
         {
             return new Enemy[]
             {
-                new Enemy("Slime",      new Statistic(2,2,30, 8,3,4,1,2), new Magic("Atack", "Regenerate_Mucus", "Toxic_Ooze")),
-                new Enemy("Potato",     new Statistic(2,2,30, 8,3,4,1,2), new Magic("Atack", "Perish", "Atack")),
-                new Enemy("Goblin",     new Statistic(2,2,30, 8,3,4,1,2), new Magic("Atack", "Swat", "Order_Atack")),
-                new Enemy("Ice_Mage",   new Statistic(2,2,30, 8,3,4,1,2), new Magic("Ice_Shard", "Hail", "Black_Tome")),
-                new Enemy("Reaper",     new Statistic(2,2,30, 8,3,4,1,2), new Magic("Unshod_Shadow", "Deathly_Reap", "Virgin_Fate")),
-                new Enemy("Trickster",  new Statistic(2,2,30, 8,3,4,1,2), new Magic("Atack", "Trick", "Toxic_Dagger"))
+                new Enemy("Slime",      new Statistic(2,2,30, 8,3,4,1,2), "Atack", "Regenerate_Mucus", "Toxic_Ooze"),
+                new Enemy("Potato",     new Statistic(2,2,30, 8,3,4,1,2), "Atack", "Perish", "Atack"),
+                new Enemy("Goblin",     new Statistic(2,2,30, 8,3,4,1,2), "Atack", "Swat", "Order_Atack"),
+                new Enemy("Ice_Mage",   new Statistic(2,2,30, 8,3,4,1,2), "Ice_Shard", "Hail", "Black_Tome"),
+                new Enemy("Reaper",     new Statistic(2,2,30, 8,3,4,1,2), "Unshod_Shadow", "Deathly_Reap", "Virgin_Fate"),
+                new Enemy("Trickster",  new Statistic(2,2,30, 8,3,4,1,2), "Atack", "Trick", "Toxic_Dagger")
             };
         }
 
         void AI(List<Unit> queue, Dice dice)
         {
-            byte i = 0;
-            byte id = (byte)(dice.random(4) - 1);
-            string name = "Atack";
-
-            // Getspell
-            foreach (KeyValuePair<string, Spell> spell in Spellbook.spellslot)
-            {
-                if(id == i)
-                {
-                    name = spell.Value.name;
-                    break;
-                }
-                i++;
-            }
+            byte spelli = (byte)(dice.random(4) - 1);
 
             // Mana checker
-            if(Spellbook.spellslot[name].cost > this.Atributes.mana)
+            if (Magic.Factory(SpellBook[spelli]).cost > this.Atributes.mana)
             {
-                id = 0;
+                spelli = 0;
             }
             else
             {
-                this.Atributes.mana -= Spellbook.spellslot[name].cost;
+                this.Atributes.mana -= Magic.Factory(SpellBook[spelli]).cost;
             }
 
             // Target select
-            if (Spellbook.spellslot[name].is_offensive)
+            if (Magic.Factory(SpellBook[spelli]).is_offensive)
             {
                 List<Unit> targets_list = new List<Unit>();
 
@@ -62,7 +49,7 @@ namespace rpgcs
                     {
                         if (target.Status == Status.Distracting)
                         {
-                            Magic.Cast(this, target, Spellbook.spellslot[name], dice.d6(), dice.d20());
+                            Magic.Cast(this, target, spelli, dice.d6(), dice.d20());
                             break;
                         }
                         else
@@ -74,7 +61,7 @@ namespace rpgcs
                 }
 
                 if(targets_list.Any()) 
-                    Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], Spellbook.spellslot[name], dice.d6(), dice.d20());
+                    Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], spelli, dice.d6(), dice.d20());
             }
             else
             {
@@ -88,7 +75,7 @@ namespace rpgcs
                     }
                 }
 
-                Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], Spellbook.spellslot[name], dice.d6(), dice.d20());
+                Magic.Cast(this, targets_list[dice.random(targets_list.Count) - 1], spelli, dice.d6(), dice.d20());
             }
         }
         public override void TakeAnAction(List<Unit> queue, Dice dice)

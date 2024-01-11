@@ -36,6 +36,7 @@ namespace rpgcs
             this.is_set_status = false;
             this.set_status = Status.None;
 
+            this.is_offensive = is_offensive;
             this.is_critable = is_critable;
         }
         internal Spell(string name, float factor, sbyte cost, DamageType damage_type, Status status, bool is_critable, bool is_offensive)
@@ -55,15 +56,10 @@ namespace rpgcs
     }
     internal class Magic
     {
-
-        internal Dictionary<string, Spell> spellslot = new Dictionary<string, Spell>();
-
-        internal Dictionary<string, Spell> Factory()
-        {
-            return new Dictionary<string, Spell>
+        static Dictionary<string, Spell> AllSpells = new Dictionary<string, Spell>
             {
                                                 // name                 factor  cost     damagetype      change status critable offensive
-                { "Attack",              new Spell("Attack",              1f,     0, DamageType.Phisical,                true, true) },
+                { "Attack",             new Spell("Attack",              1f,     0, DamageType.Phisical,                true, true) },
                 { "Fire_Ball",          new Spell("Fire_Ball",          1.4f,   2, DamageType.Magical,                 false, true) },
                 { "Lightning",          new Spell("Lightning",          1.8f,   6, DamageType.Magical, Status.Taunt,   true, true) },
                 { "Sorrow",             new Spell("Sorrow",             0.5f,   2, DamageType.Magical, Status.Calamity,false, true) },
@@ -92,23 +88,16 @@ namespace rpgcs
                 { "NULL",               new Spell("NULL", 0f, 0, DamageType.Other, Status.None, false, false) },
 
             };
-        }
-
-
-        internal Magic(string name_1, string name_2, string name_3) 
+        internal static Spell Factory(string name)
         {
-            spellslot.Add("Attack", Factory()["Attack"]);
-            if (name_1 != "Attack") spellslot.Add(name_1, Factory()[name_1]);
-            if (name_2 != "Attack") spellslot.Add(name_2, Factory()[name_2]);
-            if (name_3 != "Attack") spellslot.Add(name_3, Factory()[name_3]);
-
+            return AllSpells[name];
         }
-
-
-        internal static void Cast(Unit unit, Unit target, Spell spell, byte dice6, byte dice20)
+        internal static void Cast(Unit unit, Unit target, byte spell_id, byte dice6, byte dice20)
         {
-            ///
-            Console.WriteLine($"DEBUG: {spell.is_offensive}");
+            Spell spell = Factory(unit.SpellBook[spell_id]);
+
+            Console.WriteLine($"{spell.name} {spell.is_offensive} {spell.cost} {spell.factor}");
+
             sbyte value = 0;
             float prep_value = 0;
             
@@ -131,7 +120,7 @@ namespace rpgcs
                     prep_value = (float)
                     (unit.Atributes.luck * spell.factor * 1 + dice6);
                     break;
-                }
+            }
 
             if (dice20 != 1) {
                 Console.WriteLine($"{unit.name} used {spell.name} on {target.name}");
@@ -151,11 +140,11 @@ namespace rpgcs
                 }
             
 
-                if (spell.is_offensive == true)
+                if (spell.is_offensive)
                 {
                     target.Hurt(value);
                 }
-                if (spell.is_offensive == false)
+                else
                 {
                     target.Heal(value);
                 }

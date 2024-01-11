@@ -47,7 +47,7 @@ namespace rpgcs
         // Ooutsiders
         internal Statistic BaseAtributes;
         internal Statistic Atributes;
-        protected Magic Spellbook;
+        internal string[] SpellBook = new string[4];
         internal Status Status = Status.None;
         
 
@@ -55,13 +55,16 @@ namespace rpgcs
         /// Core of setting unit
         /// </summary>
         public Unit(){ }
-        protected Unit(string name, Statistic atributes, Magic spellbook)
+        protected Unit(string name, Statistic atributes, string spell1, string spell2, string spell3)
         {
             this.name = name;
 
             BaseAtributes = atributes;
             Atributes = atributes;
-            Spellbook = spellbook;
+            SpellBook[0] = "Attack";
+            SpellBook[1] = spell1;
+            SpellBook[2] = spell2;
+            SpellBook[3] = spell3;
         }
         public virtual void TakeAnAction(List<Unit> queue, Dice dice)
         {
