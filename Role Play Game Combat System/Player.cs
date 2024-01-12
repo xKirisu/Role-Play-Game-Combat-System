@@ -50,8 +50,6 @@ namespace rpgcs
                         throw new FormatException("Invalid command format");
                     }
 
-                    
-
                     //Target finding
                     string targetName = actionParts[1];
                     target = queue.FirstOrDefault(unit => unit.name == targetName);
@@ -68,6 +66,17 @@ namespace rpgcs
                         spelli++;
                     }
 
+                    // Mana collector
+                    if (Magic.Factory(SpellBook[spelli]).cost > this.Atributes.mana)
+                    {
+                        throw new FormatException("Not enough mana");
+                    }
+                    else
+                    {
+                        this.Atributes.mana -= Magic.Factory(SpellBook[spelli]).cost;
+                    }
+
+                    // Cast or not
                     if (target != null && spelli < 3)
                     {
                         Magic.Cast(this, target, spelli, dice.d6(), dice.d20());
@@ -81,7 +90,14 @@ namespace rpgcs
                 catch (FormatException e)
                 {
                     success = false;
-                    Console.WriteLine($"Wrong command");
+                    if (!string.IsNullOrEmpty(e.Message))
+                    {
+                        Console.WriteLine($"{e.Message}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Wrong command");
+                    }   
                 }
                 catch (Exception err)
                 {

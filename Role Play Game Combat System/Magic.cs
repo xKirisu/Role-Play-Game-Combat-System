@@ -54,6 +54,8 @@ namespace rpgcs
             this.is_offensive = is_offensive;
         }
     }
+
+
     internal class Magic
     {
         static Dictionary<string, Spell> AllSpells = new Dictionary<string, Spell>
@@ -92,6 +94,11 @@ namespace rpgcs
         {
             return AllSpells[name];
         }
+        static float Formula(sbyte offensive_atribute, sbyte deffensive_atribute, float spell_factor,  byte dice6)
+        {
+            return (float)((offensive_atribute * spell_factor * (1 - deffensive_atribute * 0.1) + dice6 - deffensive_atribute) > 0 ? (dice6 - deffensive_atribute) : 0);
+        }
+
         internal static void Cast(Unit unit, Unit target, byte spell_id, byte dice6, byte dice20)
         {
             Spell spell = Factory(unit.SpellBook[spell_id]);
@@ -104,25 +111,21 @@ namespace rpgcs
             switch(spell.type)
             {
                  case DamageType.Phisical:
-                    if (dice20 == 1) { Console.WriteLine("Atack was miss"); break; }
-                    prep_value = (float)
-                    (unit.Atributes.strenght * spell.factor * (1 - target.Atributes.deffence * 0.1) + dice6 - target.Atributes.deffence > 0 ? dice6 - target.Atributes.deffence : 0);
+                    if (dice20 == 1) { Console.WriteLine("Atack was miss"); return; }
+                    prep_value = Formula(unit.Atributes.strenght, target.Atributes.deffence, spell.factor, dice6);
                     break;
 
                  case DamageType.Magical:
-                    if (dice20 == 1) { Console.WriteLine("Spell doesn't work"); break; }
-                    prep_value = (float)
-                    (unit.Atributes.intelligence * spell.factor * (1 - target.Atributes.resistance * 0.1) + dice6 - target.Atributes.resistance > 0 ? dice6 - target.Atributes.resistance : 0);
+                    if (dice20 == 1) { Console.WriteLine("Spell doesn't work"); return; }
+                    prep_value = Formula(unit.Atributes.intelligence, target.Atributes.resistance, spell.factor, dice6);
                     break;
 
                 case DamageType.Other:
-                    if (dice20 == 1) { Console.WriteLine("Something went wrong"); break; }
-                    prep_value = (float)
-                    (unit.Atributes.luck * spell.factor * 1 + dice6);
+                    if (dice20 == 1) { Console.WriteLine("Something went wrong"); return; }
+                    prep_value = prep_value = Formula(unit.Atributes.luck, 0, spell.factor, dice6);
                     break;
             }
 
-            if (dice20 != 1) {
                 Console.WriteLine($"{unit.name} used {spell.name} on {target.name}");
 
                 if (spell.is_critable && dice20 + unit.Atributes.luck > 20)
@@ -138,7 +141,6 @@ namespace rpgcs
                     target.Status = spell.set_status;
                     Console.WriteLine("Status was setted");
                 }
-            
 
                 if (spell.is_offensive)
                 {
@@ -148,7 +150,7 @@ namespace rpgcs
                 {
                     target.Heal(value);
                 }
-            }
+         
         }
     }
 }
