@@ -15,6 +15,7 @@ namespace rpgcs
 
         public static Character[] Fabric(){
             return new Character[] { 
+                                                //STR INT VIT MANA DEF RES SPD LCK
                 new Character("Tank",       new Statistic(2,2,30, 8,3,4,1,2),  "Condamnation", "Protection", "Distraction"),
                 new Character("Knight",     new Statistic(3,2,20,10,2,2,3,4),   "Decapitation", "Punishment", "Order_Attack"),
                 new Character("Mage",       new Statistic(1,3,15,12,1,3,4,2),   "Fire_Ball", "Lightning", "Sorrow"),
@@ -29,7 +30,9 @@ namespace rpgcs
             Console.WriteLine("Spells:");
             foreach (string spell in SpellBook)
             {
-                Console.WriteLine($"\t{spell}");
+                string dash = new string(' ', 20 - spell.Length);
+
+                Console.WriteLine($"\t{spell}{dash}(-{Magic.Factory(spell).cost})");
             }
 
             while (true)
@@ -66,20 +69,20 @@ namespace rpgcs
                         spelli++;
                     }
 
-                    // Mana collector
-                    if (Magic.Factory(SpellBook[spelli]).cost > this.Atributes.mana)
-                    {
-                        throw new FormatException("Not enough mana");
-                    }
-                    else
-                    {
-                        this.Atributes.mana -= Magic.Factory(SpellBook[spelli]).cost;
-                    }
 
                     // Cast or not
                     if (target != null && spelli < 3)
                     {
-                        Magic.Cast(this, target, spelli, dice.d6(), dice.d20());
+                        // Mana collector
+                        if (Magic.Factory(SpellBook[spelli]).cost > this.Atributes.mana)
+                        {
+                            throw new FormatException("Not enough mana");
+                        }
+                        else
+                        {
+                            this.Atributes.mana -= Magic.Factory(SpellBook[spelli]).cost;
+                            Magic.Cast(this, target, spelli, dice.d6(), dice.d20());
+                        }
                     }
                     else
                     {
