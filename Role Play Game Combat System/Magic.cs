@@ -62,30 +62,30 @@ namespace rpgcs
             {
                                                 // name                 factor  cost     damagetype      change status critable offensive
                 { "Attack",             new Spell("Attack",              1f,     0, DamageType.Phisical,                true, true) },
-                { "Fire_Ball",          new Spell("Fire_Ball",          1.4f,   2, DamageType.Magical,                 false, true) },
-                { "Lightning",          new Spell("Lightning",          1.8f,   6, DamageType.Magical, Status.Taunt,   true, true) },
-                { "Sorrow",             new Spell("Sorrow",             0.5f,   2, DamageType.Magical, Status.Calamity,false, true) },
-                { "Heal",               new Spell("Heal",               1f,     4, DamageType.Magical,                 true, false) },
+                { "Fire_Ball",          new Spell("Fire_Ball",           2f,   2, DamageType.Magical,                 false, true) },
+                { "Lightning",          new Spell("Lightning",           3f,   6, DamageType.Magical, Status.Weakness,   true, true) },
+                { "Sorrow",             new Spell("Sorrow",              1f,   2, DamageType.Magical, Status.Calamity,false, true) },
+                { "Heal",               new Spell("Heal",                1f,     4, DamageType.Magical,                 true, false) },
                 { "Blessing",           new Spell("Blessing",           0.5f,   6, DamageType.Magical, Status.Blessing,false, false) },
-                { "Divine_Chastiment",  new Spell("Divine_Chastiment",  1.8f,   8, DamageType.Magical, Status.Taunt,   true, true ) },
-                { "Condamnation",       new Spell("Condamnation",       1.4f,   6, DamageType.Phisical,                true, true) },
-                { "Protection",         new Spell("Protection",         0f,     4, DamageType.Phisical,Status.Protected,false, false) },
+                { "Divine_Chastiment",  new Spell("Divine_Chastiment",   2f,   8, DamageType.Magical, Status.Weakness,   true, true ) },
+                { "Condamnation",       new Spell("Condamnation",        2f,   6, DamageType.Phisical,                true, true) },
+                { "Protection",         new Spell("Protection",          0f,     4, DamageType.Phisical,Status.Protected,false, false) },
                 { "Distraction",        new Spell("Distraction",        0.5f,   8, DamageType.Phisical,Status.Distracting,true, true) },
-                { "Punishment",         new Spell("Punishment",         1.8f,   6, DamageType.Other,                     true, true) },
-                { "Decapitation",       new Spell("Decapitation",       2f,     8, DamageType.Other,                     true, true) },
-                { "Perish",             new Spell("Perish",             2f,     8, DamageType.Magical,                  true, true) },
-                { "Ice_Shard",          new Spell("Ice_Shard",          1.8f,   8, DamageType.Magical,                  true, true) },
-                { "Hail",               new Spell("Hail",               0.5f,   4, DamageType.Magical, Status.Delay,    false, true) },
-                { "Black_Tome",         new Spell("Black_Tome",         0.0f,   4, DamageType.Magical, Status.Wisdom,   false, false) },
-                { "Unshod_Shadow",      new Spell("Unshod_Shadow",      0f,     4, DamageType.Phisical, Status.Swift,   false, false) },
-                { "Deathly_Reap",       new Spell("Deathly_Reap",       2f,     8, DamageType.Magical,                  true, true) },
+                { "Punishment",         new Spell("Punishment",          2f,   6, DamageType.Other,                     true, true) },
+                { "Decapitation",       new Spell("Decapitation",        4f,     8, DamageType.Other,                     true, true) },
+                { "Perish",             new Spell("Perish",              5f,     8, DamageType.Magical,                  true, true) },
+                { "Ice_Shard",          new Spell("Ice_Shard",          2.5f,   8, DamageType.Magical,                  true, true) },
+                { "Hail",               new Spell("Hail",                1f,   4, DamageType.Magical, Status.Delay,    false, true) },
+                { "Black_Tome",         new Spell("Black_Tome",         0.5f,   4, DamageType.Magical, Status.Wisdom,   false, false) },
+                { "Unshod_Shadow",      new Spell("Unshod_Shadow",      0.5f,     4, DamageType.Phisical, Status.Swift,   false, false) },
+                { "Deathly_Reap",       new Spell("Deathly_Reap",        4f,     8, DamageType.Magical,                  true, true) },
                 { "Virgin_Fate",        new Spell("Virgin_Fate",        0.5f,   4, DamageType.Magical, Status.Prowess,  false, false) },
-                { "Swat",               new Spell("Swat",               1.4f,   4, DamageType.Phisical, Status.Taunt,   true, true) },
-                { "Order_Attack",        new Spell("Attack_Order",        0.0f,   4, DamageType.Phisical, Status.Prowess, false, false) },
-                { "Regenerate_Mucus",   new Spell("Regenerate_Mucus",   1.4f,   4, DamageType.Magical,                  true, false) },
-                { "Toxic_Ooze",         new Spell("Toxic_Ooze",         1.4f,   4, DamageType.Magical, Status.Poisoned, true, true) },
-                { "Toxic_Dagger",       new Spell("Toxic_Dagger",       1.8f,   6, DamageType.Phisical, Status.Poisoned,true, true) },
-                { "Trick",              new Spell("Trick",              1.8f,   8, DamageType.Other,    Status.Taunt,   false, true) },
+                { "Swat",               new Spell("Swat",               2f,   4, DamageType.Phisical, Status.Weakness,   true, true) },
+                { "Order_Attack",        new Spell("Attack_Order",      0.0f,   4, DamageType.Phisical, Status.Prowess, false, false) },
+                { "Regenerate_Mucus",   new Spell("Regenerate_Mucus",   1.5f,   4, DamageType.Magical,                  true, false) },
+                { "Toxic_Ooze",         new Spell("Toxic_Ooze",         2f,   4, DamageType.Magical, Status.Poisoned, true, true) },
+                { "Toxic_Dagger",       new Spell("Toxic_Dagger",       2.5f,   6, DamageType.Phisical, Status.Poisoned,true, true) },
+                { "Trick",              new Spell("Trick",              2f,   8, DamageType.Other,    Status.Weakness,   false, true) },
 
                 { "NULL",               new Spell("NULL", 0f, 0, DamageType.Other, Status.None, false, false) },
 
@@ -96,14 +96,12 @@ namespace rpgcs
         }
         static float Formula(sbyte offensive_atribute, sbyte deffensive_atribute, float spell_factor,  byte dice6)
         {
-            return (float)((offensive_atribute * spell_factor * (1 - deffensive_atribute * 0.1) + dice6 - deffensive_atribute) > 0 ? (dice6 - deffensive_atribute) : 0);
+            return (float)((offensive_atribute * (spell_factor - deffensive_atribute * 0.1) + (dice6 - deffensive_atribute > 0 ? (dice6 - deffensive_atribute) : 0)));
         }
 
         internal static void Cast(Unit unit, Unit target, byte spell_id, byte dice6, byte dice20)
         {
             Spell spell = Factory(unit.SpellBook[spell_id]);
-
-            Console.WriteLine($"{spell.name} {spell.is_offensive} {spell.cost} {spell.factor}");
 
             sbyte value = 0;
             float prep_value = 0;
@@ -136,7 +134,7 @@ namespace rpgcs
 
                 value = (sbyte)(prep_value + 0.5);
 
-                if(spell.is_set_status && dice20 - unit.Atributes.luck + dice6 > 15)
+                if(spell.is_set_status && (dice20 - unit.Atributes.luck + dice6 > 15 || !spell.is_offensive))
                 {
                     target.Status = spell.set_status;
                     Console.WriteLine("Status was setted");

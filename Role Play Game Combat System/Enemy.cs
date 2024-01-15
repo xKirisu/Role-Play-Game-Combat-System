@@ -15,12 +15,13 @@ namespace rpgcs
         {
             return new Enemy[]
             {
-                new Enemy("Slime",      new Statistic(2,2,30, 8,3,4,1,2), "Atack", "Regenerate_Mucus", "Toxic_Ooze"),
-                new Enemy("Potato",     new Statistic(2,2,30, 8,3,4,1,2), "Atack", "Perish", "Atack"),
-                new Enemy("Goblin",     new Statistic(2,2,30, 8,3,4,1,2), "Atack", "Swat", "Order_Atack"),
-                new Enemy("Ice_Mage",   new Statistic(2,2,30, 8,3,4,1,2), "Ice_Shard", "Hail", "Black_Tome"),
-                new Enemy("Reaper",     new Statistic(2,2,30, 8,3,4,1,2), "Unshod_Shadow", "Deathly_Reap", "Virgin_Fate"),
-                new Enemy("Trickster",  new Statistic(2,2,30, 8,3,4,1,2), "Atack", "Trick", "Toxic_Dagger")
+                                                    //STR INT VIT MANA DEF RES SPD LCK
+                new Enemy("Slime",      new Statistic(2,3,15, 8,2,2,1,2), "Attack", "Regenerate_Mucus", "Toxic_Ooze"),
+                new Enemy("Potato",     new Statistic(2,2,8, 8,1,1,3,1), "Attack", "Perish", "Attack"),
+                new Enemy("Goblin",     new Statistic(2,2,12, 8,3,1,2,3), "Attack", "Swat", "Order_Attack"),
+                new Enemy("Ice_Mage",   new Statistic(2,2,15, 8,2,4,2,2), "Ice_Shard", "Hail", "Black_Tome"),
+                new Enemy("Reaper",     new Statistic(2,2,22, 8,2,3,3,4), "Unshod_Shadow", "Deathly_Reap", "Virgin_Fate"),
+                new Enemy("Trickster",  new Statistic(2,2,12, 8,4,4,1,3), "Attack", "Trick", "Toxic_Dagger")
             };
         }
 

@@ -38,7 +38,7 @@ namespace rpgcs
                 try
                 {
                     Unit target = null;
-                   
+
 
                     Console.WriteLine("\nTake an action:");
                     string action = Console.ReadLine();
@@ -57,7 +57,7 @@ namespace rpgcs
                     //Spell finding
                     byte spelli = 0;
                     string spellName = actionParts[0];
-                    while(spelli < 4)
+                    while (spelli < 4)
                     {
                         if (spellName == SpellBook[spelli])
                         {
@@ -97,7 +97,12 @@ namespace rpgcs
                     else
                     {
                         Console.WriteLine($"Wrong command");
-                    }   
+                    }
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    success = false;
+                    Console.WriteLine($"Wrong spell");
                 }
                 catch (Exception err)
                 {

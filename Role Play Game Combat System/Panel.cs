@@ -16,43 +16,22 @@ namespace rpgcs
             //Party panel draw
             foreach (Character member in party)
             {
-                switch (member.Status)
+                if(member.Status == Status.Fainted)
                 {
-                    // Fainted
-                    case Status.Fainted:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("{0:G} \t fainted", member.name);
-                        Console.ResetColor();
-                        break;
-
-                    // Statuses
-                    case Status.Prowess:
-                        Console.ForegroundColor = ConsoleColor.Red;
-
-                        Console.ResetColor();
-                        break;
-
-                    // None status
-                    case Status.None:
-                        if (member.Atributes.vitality <= member.Atributes.max_vitality / 2)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                        }
-                        Console.WriteLine($"{member.name} \t\t HP: {member.Atributes.vitality} / {member.Atributes.max_vitality}  MP: {member.Atributes.mana} / {member.Atributes.max_mana} ");
-                        Console.ResetColor();
-                        break;
-
-                    default:
-                        if (member.Atributes.vitality <= member.Atributes.max_vitality / 2)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                        }
-                        Console.Write($"{member.name} \t\t HP: {member.Atributes.vitality} / {member.Atributes.max_vitality}  MP: {member.Atributes.mana} / {member.Atributes.max_mana} ");
-                        Console.ResetColor();
-                        Console.Write($"{member.Status.ToString()}");
-                        break;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("{0:G} \t fainted", member.name);
+                    Console.ResetColor();
                 }
-                
+                else
+                {
+                    if (member.Atributes.vitality <= member.Atributes.max_vitality / 2)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    }
+                    string status = member.Status == Status.None ? "" : member.Status.ToString();
+                    Console.WriteLine($"{member.name} \t\t HP: {member.Atributes.vitality} / {member.Atributes.max_vitality}  MP: {member.Atributes.mana} / {member.Atributes.max_mana}  {status}");
+                    Console.ResetColor();
+                }
             }
 
             Console.WriteLine("");
@@ -62,6 +41,8 @@ namespace rpgcs
             {
                 if (enemy.Status == Status.Fainted) continue;
 
+                string status = enemy.Status == Status.None ? "" : enemy.Status.ToString();
+
                 if (enemy.Atributes.vitality <= enemy.Atributes.max_vitality / 2)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -70,7 +51,7 @@ namespace rpgcs
                 Console.WriteLine($"{enemy.name}"
                 //Space corrector in longer names
                 + (enemy.name.Length < 7 ? "\t" : "")
-                + $"\t HP: {enemy.Atributes.vitality} / {enemy.Atributes.max_vitality}");
+                + $"\t HP: {enemy.Atributes.vitality} / {enemy.Atributes.max_vitality}  {status}");
 
                 Console.ResetColor();
                 
