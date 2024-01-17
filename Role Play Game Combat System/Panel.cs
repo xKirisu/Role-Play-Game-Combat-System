@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace rpgcs
 {
     internal class Panel
     {
+
         public static byte Turn = 1;
         public static void Draw(Character[] party, Enemy[] enemies, List<Unit> queue, Unit actual)
         {
@@ -78,6 +80,45 @@ namespace rpgcs
             }
             Console.Write('\n');
         }
+
+        //Check Win Loose Status
+        public enum CombatStatus
+        {
+            Continued, Won, Loosed
+        }
+
+        public static CombatStatus WinLoose = CombatStatus.Continued;
+
+        public static CombatStatus ChechWinLoose(Character[] party, Enemy[] enemies)
+        {
+            CombatStatus status;
+
+            ///Check loose
+            status = CombatStatus.Loosed;
+            foreach (Character character in party)
+            {
+                if (character.Status != Status.Fainted)
+                {
+                    status = CombatStatus.Continued;
+                    break;
+                }
+
+            }
+            ///Check win
+            if(status == CombatStatus.Continued) {
+                status = CombatStatus.Won;
+                foreach (Enemy enemy in enemies)
+                {
+                    if (enemy.Status != Status.Fainted)
+                    {
+                        status = CombatStatus.Continued;
+                        break;
+                    }
+                }
+            }
+            return status;
+        }
+
     }
 
 }

@@ -40,6 +40,7 @@ namespace rpgcs
             }
 
             // Target select
+            // FNT is not ignored - to correct
             if (Magic.Factory(SpellBook[spelli]).is_offensive)
             {
                 List<Unit> targets_list = new List<Unit>();

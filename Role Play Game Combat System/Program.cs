@@ -1,5 +1,6 @@
 ﻿using rpgcs;
 using System.IO;
+using static rpgcs.Panel;
 
 namespace program
 {
@@ -41,6 +42,14 @@ namespace program
                 // Turn
                 foreach (Unit unit in Queue)
                 {
+                    //checkwin
+                    Panel.WinLoose = Panel.ChechWinLoose(party, enemies);
+                    if(Panel.WinLoose != CombatStatus.Continued)
+                    {
+                        break;
+                    }
+
+
                     Panel.Draw(party, enemies, Queue, unit);
 
                     if (unit.Status != Status.Fainted)
@@ -49,24 +58,25 @@ namespace program
                     Console.Clear();
                     
                 }
-
+                if (Panel.WinLoose != CombatStatus.Continued)
+                {
+                    break;
+                }
                 Panel.Turn++;
-
-                //Check win
-                foreach(Character character in party)
-                {
-                    if (character.Status != Status.Fainted) break;
-                    if (party.LastOrDefault().Status == Status.Fainted)
-                    {
-
-                    }
-                }
-                foreach(Enemy enemy in enemies)
-                {
-                    if (enemy.Status != Status.Fainted) break;
-                }
-
             }
+            if(Panel.WinLoose == CombatStatus.Won)
+            {
+                Console.Clear();
+                Panel.Draw(party, enemies, Queue, new Unit());
+                Console.WriteLine("Congratulation. You won the battle!");
+            }
+            else if(Panel.WinLoose == CombatStatus.Loosed)
+            {
+                Console.Clear();
+                Panel.Draw(party, enemies, Queue, new Unit());
+                Console.WriteLine("You loose the battle");
+            }
+            
         }
     }
 
