@@ -71,7 +71,7 @@ namespace rpgcs
 
                 foreach (Unit target in queue)
                 {
-                    if (target is Enemy)
+                    if ((target is Enemy)&&(target.Status != Status.Fainted))
                     {
                         targets_list.Add(target);
                     }
