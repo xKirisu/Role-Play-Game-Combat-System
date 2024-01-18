@@ -54,8 +54,14 @@ namespace rpgcs
                     }
 
                     //Target finding
+                    //Check if target if fainted - to add
                     string targetName = actionParts[1];
                     target = queue.FirstOrDefault(unit => unit.name == targetName);
+
+                    if(target.Status == Status.Fainted)
+                    {
+                        throw new FormatException("Target is fainted");
+                    }
 
                     //Spell finding
                     byte spelli = 0;
@@ -71,7 +77,7 @@ namespace rpgcs
 
 
                     // Cast or not
-                    if (target != null && spelli < 3)
+                    if (target != null && spelli < 4)
                     {
                         // Mana collector
                         if (Magic.Factory(SpellBook[spelli]).cost > this.Atributes.mana)
