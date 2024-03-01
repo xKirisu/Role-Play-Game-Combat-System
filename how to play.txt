@@ -1,0 +1,4 @@
+write spell name and enemy name and press enter
+
+example:
+Attack Potato
